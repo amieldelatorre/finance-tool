@@ -2,25 +2,21 @@ package com.financetool.finance.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotEmpty
     private String firstName;
-    @NotEmpty
     private String lastName;
-    @NotEmpty
+
+    @Column(name="email", unique = true, nullable = false)
     @Email
     private String email;
-    @NotEmpty
     private String password;
-    @NotEmpty
     @Enumerated(EnumType.STRING)
-    private RoleType role;
+    private RoleType roleType;
 
     public Integer getId() {
         return id;
@@ -42,8 +38,8 @@ public class User {
         return password;
     }
 
-    public RoleType getRole() {
-        return role;
+    public RoleType getRoleType() {
+        return roleType;
     }
 
     public void setFirstName(String firstName) {
@@ -62,7 +58,7 @@ public class User {
         this.password = password;
     }
 
-    public void setRole(RoleType role) {
-        this.role = role;
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 }

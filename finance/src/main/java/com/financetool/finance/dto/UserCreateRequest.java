@@ -2,12 +2,22 @@ package com.financetool.finance.dto;
 
 import com.financetool.finance.model.RoleType;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 public class UserCreateRequest {
+    @NotEmpty
     private String firstName;
+    @NotEmpty
     private String lastName;
-    public String email;
-    public String password;
-    public RoleType role;
+    @Email
+    @NotBlank
+    private String email;
+    @NotEmpty
+    private String password;
+    @NotEmpty
+    private RoleType roleType;
 
     public String getFirstName() {
         return firstName;
@@ -25,8 +35,8 @@ public class UserCreateRequest {
         return password;
     }
 
-    public RoleType getRole() {
-        return role;
+    public RoleType getRoleType() {
+        return roleType;
     }
 
     public void setFirstName(String firstName) {
@@ -45,8 +55,8 @@ public class UserCreateRequest {
         this.password = password;
     }
 
-    public void setRole(RoleType role) {
-        this.role = role;
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 
 }

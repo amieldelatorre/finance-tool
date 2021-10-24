@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         newUser.setLastName(user.getLastName());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(user.getPassword());
-        newUser.setRole(user.getRole());
+        newUser.setRoleType(user.getRoleType());
         userRepository.save(newUser);
 
         return newUser;
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             user.get().setLastName(userRequest.getLastName());
             user.get().setEmail(userRequest.getEmail());
             user.get().setPassword(userRequest.getPassword());
-            user.get().setRole(userRequest.getRole());
+            user.get().setRoleType(userRequest.getRoleType());
             userRepository.save(user.get());
             return user;
         }
@@ -73,5 +73,11 @@ public class UserServiceImpl implements UserService {
         else {
             userRepository.delete(user.get());
         }
+    }
+
+    @Override
+    public User getUserByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        return user;
     }
 }

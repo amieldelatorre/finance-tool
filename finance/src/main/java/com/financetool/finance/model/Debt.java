@@ -2,31 +2,19 @@ package com.financetool.finance.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 
 @Entity
-public class Account {
+public class Debt {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
-    @NotEmpty
-    private String name;
-    @NotEmpty
     private Integer userId;
-    @NotEmpty
     private Double value;
-    @NotEmpty
-    private Date dateOpened;
+    private String description;
 
     public Integer getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Integer getUserId() {
@@ -37,12 +25,8 @@ public class Account {
         return value;
     }
 
-    public Date getDateOpened() {
-        return dateOpened;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getDescription() {
+        return description;
     }
 
     public void setUserId(Integer userId) {
@@ -53,7 +37,7 @@ public class Account {
         this.value = value;
     }
 
-    public void setDateOpened(Date dateOpened) {
-        this.dateOpened = dateOpened;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

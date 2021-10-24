@@ -4,7 +4,6 @@ import com.financetool.finance.dto.UserCreateRequest;
 import com.financetool.finance.model.User;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,5 +14,5 @@ public interface UserService {
     Optional<User> getUserById(Integer userId);
     Optional<User> updateUser(Integer userId, UserCreateRequest userRequest);
     void deleteUser(Integer userId);
-
+    User getUserByEmail(String email);
 }

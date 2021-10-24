@@ -1,6 +1,7 @@
 package com.financetool.finance.controller;
 
 import com.financetool.finance.service.UserService;
+import com.financetool.finance.util.InputValidation;
 import com.financetool.finance.util.OutputFormatter;
 import com.financetool.finance.dto.UserCreateRequest;
 import com.financetool.finance.dto.UserOutDto;
@@ -10,18 +11,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @PostMapping(path = "/users", consumes = "application/json", produces = "application/json")
-    public @ResponseStatus(HttpStatus.CREATED) UserOutDto addNewUser(@RequestBody UserCreateRequest user) {
+    public @ResponseStatus(HttpStatus.CREATED) UserOutDto addNewUser(@RequestBody @Valid UserCreateRequest user) {
         User newUser = userService.createUser(user);
 
         return OutputFormatter.userToUserOutDto(newUser);
@@ -57,6 +59,12 @@ public class UserController {
     public ResponseEntity<?> deleteUserById(@PathVariable(value="userId") Integer userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/users/test")
+    public Boolean test() {
+        Boolean t = InputValidation.checkEmailExists("test@testmail.com");
+        return t;
     }
 
 }

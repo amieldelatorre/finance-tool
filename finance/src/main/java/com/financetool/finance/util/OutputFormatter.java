@@ -11,7 +11,7 @@ public class OutputFormatter {
         userOut.setFirstName(user.getFirstName());
         userOut.setLastName(user.getLastName());
         userOut.setEmail(user.getEmail());
-        userOut.setRole(user.getRole());
+        userOut.setRoleType(user.getRoleType());
 
         return userOut;
     }

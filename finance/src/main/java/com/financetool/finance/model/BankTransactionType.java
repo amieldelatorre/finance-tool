@@ -1,6 +1,6 @@
 package com.financetool.finance.model;
 
-public enum TransactionType {
+public enum BankTransactionType {
     WITHDRAWAL,
     DEPOSIT
 }

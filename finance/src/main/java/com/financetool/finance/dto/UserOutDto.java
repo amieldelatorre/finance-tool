@@ -10,7 +10,7 @@ public class UserOutDto {
     private String firstName;
     private String lastName;
     public String email;
-    public RoleType role;
+    public RoleType roleType;
 
     public Integer getId() {
         return id;
@@ -28,8 +28,8 @@ public class UserOutDto {
         return email;
     }
 
-    public RoleType getRole() {
-        return role;
+    public RoleType getRoleType() {
+        return roleType;
     }
 
     public void setId(Integer id) {
@@ -48,8 +48,8 @@ public class UserOutDto {
         this.email = email;
     }
 
-    public void setRole(RoleType role) {
-        this.role = role;
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 
 }

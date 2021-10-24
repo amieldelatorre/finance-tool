@@ -2,6 +2,8 @@ package com.financetool.finance.dto;
 
 import com.financetool.finance.model.RoleType;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -17,6 +19,7 @@ public class UserCreateRequest {
     @NotEmpty
     private String password;
     @NotEmpty
+    @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
     public String getFirstName() {

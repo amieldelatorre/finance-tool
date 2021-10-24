@@ -2,11 +2,15 @@ package com.financetool.finance.dto;
 
 import com.financetool.finance.model.RoleType;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 public class UserOutDto {
     private Integer id;
     private String firstName;
     private String lastName;
     public String email;
+    @Enumerated(EnumType.STRING)
     public RoleType roleType;
 
     public Integer getId() {

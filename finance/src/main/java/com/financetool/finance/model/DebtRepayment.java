@@ -1,9 +1,6 @@
 package com.financetool.finance.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class DebtRepayment {
@@ -12,6 +9,7 @@ public class DebtRepayment {
     private Integer id;
     private Integer debtId;
     private Double value;
+    @Enumerated(EnumType.STRING)
     private OccurenceType occurenceType;
 
     public Integer getId() {

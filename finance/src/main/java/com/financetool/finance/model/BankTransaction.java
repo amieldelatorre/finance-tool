@@ -21,6 +21,7 @@ public class BankTransaction {
     @NotEmpty
     private Double value;
     private String category;
+    @Enumerated(EnumType.STRING)
     private OccurenceType occurenceType;
     private Date dateOfNextRecurrence;
 

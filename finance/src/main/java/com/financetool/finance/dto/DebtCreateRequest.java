@@ -1,21 +1,9 @@
-package com.financetool.finance.model;
+package com.financetool.finance.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
-public class Debt {
-    @Id
-    @GeneratedValue
-    private Integer debtId;
+public class DebtCreateRequest {
     private Integer userId;
     private Double value;
     private String description;
-
-    public Integer getId() {
-        return debtId;
-    }
 
     public Integer getUserId() {
         return userId;

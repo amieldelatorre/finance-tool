@@ -7,7 +7,7 @@ import javax.validation.constraints.Email;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer userId;
     private String firstName;
     private String lastName;
 
@@ -19,7 +19,7 @@ public class User {
     private RoleType roleType;
 
     public Integer getId() {
-        return id;
+        return userId;
     }
 
     public String getFirstName() {

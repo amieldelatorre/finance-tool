@@ -11,7 +11,7 @@ import java.util.Date;
 public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer bankAccountId;
     @NotEmpty
     private String name;
     @NotEmpty
@@ -22,7 +22,7 @@ public class BankAccount {
     private Date dateOpened;
 
     public Integer getId() {
-        return id;
+        return bankAccountId;
     }
 
     public String getName() {

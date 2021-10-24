@@ -9,13 +9,13 @@ import javax.persistence.Id;
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer budgetId;
     private Integer userId;
     private String name;
     private String description;
 
     public Integer getId() {
-        return id;
+        return budgetId;
     }
 
     public Integer getUserId() {

@@ -6,17 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class BudgetCategories {
+public class BudgetCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    private Integer budgetCategoryId;
     private Integer budgetId;
     private String name;
     private String description;
     private Double value;
 
     public Integer getId() {
-        return Id;
+        return budgetCategoryId;
     }
 
     public Integer getBudgetId() {

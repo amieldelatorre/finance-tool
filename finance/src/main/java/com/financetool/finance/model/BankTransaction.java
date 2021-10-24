@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 public class BankTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer bankTransactionId;
     @NotEmpty
     private Integer userId;
     @NotEmpty
@@ -26,7 +26,7 @@ public class BankTransaction {
     private Date dateOfNextRecurrence;
 
     public Integer getId() {
-        return id;
+        return bankTransactionId;
     }
 
     public Integer getUserId() {

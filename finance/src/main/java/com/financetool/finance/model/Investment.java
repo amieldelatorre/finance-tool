@@ -9,13 +9,13 @@ import javax.persistence.Id;
 public class Investment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer investmentId;
     private Integer userId;
     private String name;
     private Double value;
 
     public Integer getId() {
-        return id;
+        return investmentId;
     }
 
     public Integer getUserId() {

@@ -6,14 +6,14 @@ import javax.persistence.*;
 public class DebtRepayment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer debtRepaymentId;
     private Integer debtId;
     private Double value;
     @Enumerated(EnumType.STRING)
     private OccurenceType occurenceType;
 
     public Integer getId() {
-        return id;
+        return debtRepaymentId;
     }
 
     public Integer getDebtId() {

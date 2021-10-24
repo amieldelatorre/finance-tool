@@ -1,8 +1,10 @@
 package com.financetool.finance.util;
 
 import com.financetool.finance.dto.AssetOutDto;
+import com.financetool.finance.dto.DebtOutDto;
 import com.financetool.finance.dto.UserOutDto;
 import com.financetool.finance.model.Asset;
+import com.financetool.finance.model.Debt;
 import com.financetool.finance.model.User;
 
 public class OutputFormatter {
@@ -27,5 +29,16 @@ public class OutputFormatter {
         assetOut.setValue(asset.getValue());
 
         return assetOut;
+    }
+
+    public static DebtOutDto debtToDebtOutDto(Debt debt) {
+        DebtOutDto debtOut = new DebtOutDto();
+
+        debtOut.setId(debt.getId());
+        debtOut.setUserId(debt.getUserId());
+        debtOut.setValue(debt.getValue());
+        debtOut.setDescription(debt.getDescription());
+
+        return debtOut;
     }
 }

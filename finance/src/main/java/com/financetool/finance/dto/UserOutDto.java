@@ -2,9 +2,6 @@ package com.financetool.finance.dto;
 
 import com.financetool.finance.model.RoleType;
 
-import javax.management.relation.Role;
-import java.util.Set;
-
 public class UserOutDto {
     private Integer id;
     private String firstName;

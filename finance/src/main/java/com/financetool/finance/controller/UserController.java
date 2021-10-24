@@ -34,9 +34,8 @@ public class UserController {
         List<UserOutDto> userOutList = new ArrayList<UserOutDto>();
         List<User> users = userService.getAllUsers();
 
-        for (User user: users) {
+        for (User user : users)
             userOutList.add(OutputFormatter.userToUserOutDto(user));
-        }
 
         return userOutList;
     }
@@ -58,6 +57,7 @@ public class UserController {
     @DeleteMapping(path = "/users/{userId}")
     public ResponseEntity<?> deleteUserById(@PathVariable(value="userId") Integer userId) {
         userService.deleteUser(userId);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

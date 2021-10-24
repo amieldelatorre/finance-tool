@@ -1,6 +1,8 @@
 package com.financetool.finance.util;
 
+import com.financetool.finance.dto.AssetOutDto;
 import com.financetool.finance.dto.UserOutDto;
+import com.financetool.finance.model.Asset;
 import com.financetool.finance.model.User;
 
 public class OutputFormatter {
@@ -14,5 +16,16 @@ public class OutputFormatter {
         userOut.setRoleType(user.getRoleType());
 
         return userOut;
+    }
+
+    public static AssetOutDto assetToAssetOutDto(Asset asset) {
+        AssetOutDto assetOut = new AssetOutDto();
+
+        assetOut.setId(asset.getId());
+        assetOut.setUserId(asset.getUserId());
+        assetOut.setName(asset.getName());
+        assetOut.setValue(asset.getValue());
+
+        return assetOut;
     }
 }

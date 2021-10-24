@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Integer userId) {
-        Optional<User> user = userRepository.findById((userId));
+        Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) {
             throw new ResourceNotFoundException("User id " + userId + " cannot be found.");

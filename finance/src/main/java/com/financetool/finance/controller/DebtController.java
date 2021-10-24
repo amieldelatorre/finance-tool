@@ -2,7 +2,10 @@ package com.financetool.finance.controller;
 
 import com.financetool.finance.dto.DebtCreateRequest;
 import com.financetool.finance.dto.DebtOutDto;
+import com.financetool.finance.dto.DebtRepaymentCreateRequest;
+import com.financetool.finance.dto.DebtRepaymentOutDto;
 import com.financetool.finance.model.Debt;
+import com.financetool.finance.model.DebtRepayment;
 import com.financetool.finance.service.DebtService;
 import com.financetool.finance.util.OutputFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,4 +74,68 @@ public class DebtController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping(path = "/debts/{debtId}/repayments", produces = "application/json")
+    public @ResponseStatus(HttpStatus.CREATED)
+    DebtRepaymentOutDto addNewDebtRepayment(@RequestBody @Valid DebtRepaymentCreateRequest debtRepaymentRequest) {
+        DebtRepayment debtRepayment = debtService.createDebtRepayment(debtRepaymentRequest);
+
+        return OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment);
+    }
+
+    @GetMapping(path = "/debtrepayments", produces = "application/json")
+    public Iterable<DebtRepaymentOutDto> getAllDebtRepayments() {
+        List<DebtRepaymentOutDto> debtRepaymentOutDtos = new ArrayList<DebtRepaymentOutDto>();
+        List<DebtRepayment> debtRepayments = debtService.getAllDebtRepayment();
+
+        for (DebtRepayment debtRepayment : debtRepayments)
+            debtRepaymentOutDtos.add(OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment));
+
+        return debtRepaymentOutDtos;
+    }
+
+    @GetMapping(path = "/debtrepayments/{debtRepaymentId}", produces = "application/json")
+    public DebtRepaymentOutDto getDebtRepaymentById(@PathVariable(value="debtRepaymentId") Integer debtRepaymentId) {
+        Optional<DebtRepayment> debtRepayment = debtService.getDebtRepaymentById(debtRepaymentId);
+
+        return OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment.get());
+    }
+
+    @GetMapping(path = "/debts/{debtId}/repayments", produces = "application/json")
+    public Iterable<DebtRepaymentOutDto> getDebtRepaymentByDebtId(@PathVariable(value="debtId") Integer debtId) {
+        List<DebtRepaymentOutDto> debtRepaymentOutDtos = new ArrayList<DebtRepaymentOutDto>();
+        List<DebtRepayment> debtRepayments = debtService.getDebtRepaymentsByDebtId(debtId);
+
+        for (DebtRepayment debtRepayment : debtRepayments)
+            debtRepaymentOutDtos.add(OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment));
+
+        return debtRepaymentOutDtos;
+    }
+
+    @DeleteMapping(path = "/debtrepayments/{debtRepaymentId}")
+    public ResponseEntity<?> deleteDebtRepaymentById(@PathVariable(value="debtRepaymentId") Integer debtRepaymentId) {
+        debtService.deleteDebtRepayment(debtRepaymentId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/debtrepayments/{debtRepaymentId}")
+    public DebtRepaymentOutDto
+    updateDebtRepaymentById(@PathVariable(value="debtRepaymentId") Integer debtRepaymentId, @RequestBody @Valid DebtRepaymentCreateRequest debtRepaymentCreateRequest) {
+        Optional<DebtRepayment> debtRepayment = debtService.updateDebtRepayment(debtRepaymentId, debtRepaymentCreateRequest);
+
+        return OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment.get());
+    }
+
+    /*
+    @GetMapping(path = "/users/{userId}/repayments", produces = "application/json")
+    public Iterable<DebtRepaymentOutDto> getDebtRepaymentByUserId(@PathVariable(value="userId") Integer userId) {
+        List<DebtRepaymentOutDto> debtRepaymentOutDtos = new ArrayList<DebtRepaymentOutDto>();
+        List<DebtRepayment> debtRepayments = debtService.getDebtRepaymentsByUserId(userId);
+
+        for (DebtRepayment debtRepayment : debtRepayments)
+            debtRepaymentOutDtos.add(OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment));
+
+        return debtRepaymentOutDtos;
+    } */
 }

@@ -1,13 +1,7 @@
 package com.financetool.finance.util;
 
-import com.financetool.finance.dto.AssetOutDto;
-import com.financetool.finance.dto.DebtOutDto;
-import com.financetool.finance.dto.DebtRepaymentOutDto;
-import com.financetool.finance.dto.UserOutDto;
-import com.financetool.finance.model.Asset;
-import com.financetool.finance.model.Debt;
-import com.financetool.finance.model.DebtRepayment;
-import com.financetool.finance.model.User;
+import com.financetool.finance.dto.*;
+import com.financetool.finance.model.*;
 
 public class OutputFormatter {
     public static UserOutDto userToUserOutDto(User user) {
@@ -53,5 +47,39 @@ public class OutputFormatter {
         debtRepaymentOut.setOccurenceType(debtRepayment.getOccurenceType());
 
         return debtRepaymentOut;
+    }
+
+    public static InvestmentOutDto investmentToInvestmentOutDto(Investment investment) {
+        InvestmentOutDto investmentOut = new InvestmentOutDto();
+
+        investmentOut.setInvestmentId(investment.getId());
+        investmentOut.setUserId(investment.getUserId());
+        investmentOut.setName(investment.getName());
+        investmentOut.setValue(investment.getValue());
+
+        return investmentOut;
+    }
+
+    public static BudgetOutDto budgetToBudgetOutDto(Budget budget) {
+        BudgetOutDto budgetOut = new BudgetOutDto();
+
+        budgetOut.setBudgetId(budget.getId());
+        budgetOut.setUserId(budget.getUserId());
+        budgetOut.setName(budget.getName());
+        budgetOut.setDescription(budget.getDescription());
+
+        return budgetOut;
+    }
+
+    public static BudgetCategoryOutDto budgetCategoryToBudgetCategoryOutDto(BudgetCategory budgetCategory) {
+        BudgetCategoryOutDto budgetCategoryOut = new BudgetCategoryOutDto();
+
+        budgetCategoryOut.setBudgetCategoryId(budgetCategory.getId());
+        budgetCategoryOut.setBudgetId(budgetCategory.getBudgetId());
+        budgetCategoryOut.setName(budgetCategory.getName());
+        budgetCategoryOut.setDescription(budgetCategory.getDescription());
+        budgetCategoryOut.setValue(budgetCategory.getValue());
+
+        return budgetCategoryOut;
     }
 }

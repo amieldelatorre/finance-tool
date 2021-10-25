@@ -2,7 +2,7 @@ package com.financetool.finance.dto;
 
 import javax.validation.constraints.NotEmpty;
 
-public class AssetCreateRequest {
+public class InvestmentCreateRequest {
     @NotEmpty
     private Integer userId;
     @NotEmpty
@@ -34,4 +34,3 @@ public class AssetCreateRequest {
         this.value = value;
     }
 }
-

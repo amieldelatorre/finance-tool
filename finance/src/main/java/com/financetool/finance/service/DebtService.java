@@ -17,6 +17,7 @@ public interface DebtService {
     List<Debt> getDebtByUserId(Integer userId);
     Optional<Debt> updateDebt(Integer debtId, DebtCreateRequest debtRequest);
     void deleteDebt(Integer debtId);
+
     DebtRepayment createDebtRepayment(DebtRepaymentCreateRequest debtRepayment);
     List<DebtRepayment> getAllDebtRepayment();
     Optional<DebtRepayment> getDebtRepaymentById(Integer debtRepaymentId);

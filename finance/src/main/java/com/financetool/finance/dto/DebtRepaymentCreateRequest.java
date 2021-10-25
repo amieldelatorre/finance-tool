@@ -4,10 +4,14 @@ import com.financetool.finance.model.OccurenceType;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotEmpty;
 
 public class DebtRepaymentCreateRequest {
+    @NotEmpty
     private Integer debtId;
+    @NotEmpty
     private Double value;
+    @NotEmpty
     @Enumerated(EnumType.STRING)
     private OccurenceType occurenceType;
 

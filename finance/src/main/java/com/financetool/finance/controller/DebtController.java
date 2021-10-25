@@ -83,7 +83,7 @@ public class DebtController {
         return OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment);
     }
 
-    @GetMapping(path = "/debtrepayments", produces = "application/json")
+    @GetMapping(path = "/debtRepayments", produces = "application/json")
     public Iterable<DebtRepaymentOutDto> getAllDebtRepayments() {
         List<DebtRepaymentOutDto> debtRepaymentOutDtos = new ArrayList<DebtRepaymentOutDto>();
         List<DebtRepayment> debtRepayments = debtService.getAllDebtRepayment();
@@ -94,7 +94,7 @@ public class DebtController {
         return debtRepaymentOutDtos;
     }
 
-    @GetMapping(path = "/debtrepayments/{debtRepaymentId}", produces = "application/json")
+    @GetMapping(path = "/debtRepayments/{debtRepaymentId}", produces = "application/json")
     public DebtRepaymentOutDto getDebtRepaymentById(@PathVariable(value="debtRepaymentId") Integer debtRepaymentId) {
         Optional<DebtRepayment> debtRepayment = debtService.getDebtRepaymentById(debtRepaymentId);
 
@@ -112,30 +112,18 @@ public class DebtController {
         return debtRepaymentOutDtos;
     }
 
-    @DeleteMapping(path = "/debtrepayments/{debtRepaymentId}")
+    @DeleteMapping(path = "/debtRepayments/{debtRepaymentId}")
     public ResponseEntity<?> deleteDebtRepaymentById(@PathVariable(value="debtRepaymentId") Integer debtRepaymentId) {
         debtService.deleteDebtRepayment(debtRepaymentId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(path = "/debtrepayments/{debtRepaymentId}")
+    @PutMapping(path = "/debtRepayments/{debtRepaymentId}")
     public DebtRepaymentOutDto
     updateDebtRepaymentById(@PathVariable(value="debtRepaymentId") Integer debtRepaymentId, @RequestBody @Valid DebtRepaymentCreateRequest debtRepaymentCreateRequest) {
         Optional<DebtRepayment> debtRepayment = debtService.updateDebtRepayment(debtRepaymentId, debtRepaymentCreateRequest);
 
         return OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment.get());
     }
-
-    /*
-    @GetMapping(path = "/users/{userId}/repayments", produces = "application/json")
-    public Iterable<DebtRepaymentOutDto> getDebtRepaymentByUserId(@PathVariable(value="userId") Integer userId) {
-        List<DebtRepaymentOutDto> debtRepaymentOutDtos = new ArrayList<DebtRepaymentOutDto>();
-        List<DebtRepayment> debtRepayments = debtService.getDebtRepaymentsByUserId(userId);
-
-        for (DebtRepayment debtRepayment : debtRepayments)
-            debtRepaymentOutDtos.add(OutputFormatter.debtRepaymentToDebtRepaymentOutDto(debtRepayment));
-
-        return debtRepaymentOutDtos;
-    } */
 }

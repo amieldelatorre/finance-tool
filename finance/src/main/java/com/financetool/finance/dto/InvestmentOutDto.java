@@ -1,14 +1,14 @@
 package com.financetool.finance.dto;
 
-import javax.validation.constraints.NotEmpty;
-
-public class AssetCreateRequest {
-    @NotEmpty
+public class InvestmentOutDto {
+    private Integer investmentId;
     private Integer userId;
-    @NotEmpty
     private String name;
-    @NotEmpty
     private Double value;
+
+    public Integer getId() {
+        return investmentId;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -20,6 +20,10 @@ public class AssetCreateRequest {
 
     public Double getValue() {
         return value;
+    }
+
+    public void setInvestmentId(Integer investmentId) {
+        this.investmentId = investmentId;
     }
 
     public void setUserId(Integer userId) {
@@ -34,4 +38,3 @@ public class AssetCreateRequest {
         this.value = value;
     }
 }
-

@@ -58,7 +58,7 @@ public class AssetController {
         return assetOutList;
     }
 
-    @PutMapping(path = "/assets/{assetId}", produces = "application/json")
+    @PutMapping(path = "/assets/{assetId}", consumes = "application/json", produces = "application/json")
     public AssetOutDto updateAssetById(@PathVariable(value="assetId") Integer assetId, @RequestBody AssetCreateRequest assetRequest) {
         Optional<Asset> asset = assetService.updateAsset(assetId, assetRequest);
 

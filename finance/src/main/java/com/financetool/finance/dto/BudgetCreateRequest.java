@@ -2,13 +2,13 @@ package com.financetool.finance.dto;
 
 import javax.validation.constraints.NotEmpty;
 
-public class AssetCreateRequest {
+public class BudgetCreateRequest {
     @NotEmpty
     private Integer userId;
     @NotEmpty
     private String name;
     @NotEmpty
-    private Double value;
+    private String description;
 
     public Integer getUserId() {
         return userId;
@@ -18,8 +18,8 @@ public class AssetCreateRequest {
         return name;
     }
 
-    public Double getValue() {
-        return value;
+    public String getDescription() {
+        return description;
     }
 
     public void setUserId(Integer userId) {
@@ -30,8 +30,7 @@ public class AssetCreateRequest {
         this.name = name;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
-

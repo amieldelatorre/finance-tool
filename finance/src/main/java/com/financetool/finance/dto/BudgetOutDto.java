@@ -1,33 +1,37 @@
 package com.financetool.finance.dto;
 
-import javax.validation.constraints.NotEmpty;
-
-public class DebtCreateRequest {
-    @NotEmpty
+public class BudgetOutDto {
+    private Integer budgetId;
     private Integer userId;
-    @NotEmpty
-    private Double value;
-    @NotEmpty
+    private String name;
     private String description;
+
+    public Integer getId() {
+        return budgetId;
+    }
 
     public Integer getUserId() {
         return userId;
     }
 
-    public Double getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setBudgetId(Integer budgetId) {
+        this.budgetId = budgetId;
+    }
+
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDescription(String description) {

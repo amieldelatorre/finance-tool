@@ -96,7 +96,7 @@ public class DebtServiceImpl implements DebtService{
 
             newDebtRepayment.setDebtId(debtRepayment.getDebtId());
             newDebtRepayment.setValue(debtRepayment.getValue());
-            newDebtRepayment.setOccurenceType(debtRepayment.getOccurenceType());
+            newDebtRepayment.setOccurrenceType(debtRepayment.getOccurrenceType());
 
             debt.get().setValue(debt.get().getValue() - newDebtRepayment.getValue());
 
@@ -172,7 +172,7 @@ public class DebtServiceImpl implements DebtService{
 
             debtRepayment.get().setValue(debtRepaymentCreateRequest.getValue());
             debtRepayment.get().setDebtId(debtRepaymentCreateRequest.getDebtId());
-            debtRepayment.get().setOccurenceType((debtRepaymentCreateRequest.getOccurenceType()));
+            debtRepayment.get().setOccurrenceType((debtRepaymentCreateRequest.getOccurrenceType()));
             debtRepaymentRepository.save(debtRepayment.get());
 
             updatedDebt.get().setValue(updatedDebt.get().getValue() - debtRepaymentCreateRequest.getValue());

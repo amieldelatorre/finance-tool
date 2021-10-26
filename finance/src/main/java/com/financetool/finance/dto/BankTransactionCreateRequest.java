@@ -1,33 +1,22 @@
-package com.financetool.finance.model;
+package com.financetool.finance.dto;
+
+import com.financetool.finance.model.BankTransactionType;
+import com.financetool.finance.model.OccurrenceType;
 
 import javax.persistence.*;
 import java.util.Date;
-import javax.validation.constraints.NotEmpty;
 
-@Entity
-public class BankTransaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer bankTransactionId;
-    @NotEmpty
+public class BankTransactionCreateRequest {
     private Integer userId;
-    @NotEmpty
     private Integer accountId;
-    @NotEmpty
     @Enumerated(EnumType.STRING)
     private BankTransactionType bankTransactionType;
-    @NotEmpty
     private Date transactionDate;
-    @NotEmpty
     private Double value;
     private String category;
     @Enumerated(EnumType.STRING)
     private OccurrenceType occurrenceType;
     private Date dateOfNextRecurrence;
-
-    public Integer getId() {
-        return bankTransactionId;
-    }
 
     public Integer getUserId() {
         return userId;

@@ -1,6 +1,6 @@
 package com.financetool.finance.dto;
 
-import com.financetool.finance.model.OccurenceType;
+import com.financetool.finance.model.OccurrenceType;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,7 +10,7 @@ public class DebtRepaymentOutDto {
     private Integer debtId;
     private Double value;
     @Enumerated(EnumType.STRING)
-    private OccurenceType occurenceType;
+    private OccurrenceType occurrenceType;
 
     public Integer getId() {
         return debtRepaymentId;
@@ -24,8 +24,8 @@ public class DebtRepaymentOutDto {
         return value;
     }
 
-    public OccurenceType getOccurenceType() {
-        return occurenceType;
+    public OccurrenceType getOccurrenceType() {
+        return occurrenceType;
     }
 
     public void setDebtRepaymentId(Integer debtRepaymentId) {
@@ -40,7 +40,7 @@ public class DebtRepaymentOutDto {
         this.value = value;
     }
 
-    public void setOccurenceType(OccurenceType occurenceType) {
-        this.occurenceType = occurenceType;
+    public void setOccurrenceType(OccurrenceType occurrenceType) {
+        this.occurrenceType = occurrenceType;
     }
 }

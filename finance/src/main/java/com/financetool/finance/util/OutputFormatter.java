@@ -44,7 +44,7 @@ public class OutputFormatter {
         debtRepaymentOut.setDebtRepaymentId(debtRepayment.getId());
         debtRepaymentOut.setDebtId(debtRepayment.getDebtId());
         debtRepaymentOut.setValue(debtRepayment.getValue());
-        debtRepaymentOut.setOccurenceType(debtRepayment.getOccurenceType());
+        debtRepaymentOut.setOccurrenceType(debtRepayment.getOccurrenceType());
 
         return debtRepaymentOut;
     }
@@ -81,5 +81,33 @@ public class OutputFormatter {
         budgetCategoryOut.setValue(budgetCategory.getValue());
 
         return budgetCategoryOut;
+    }
+
+    public static BankAccountOutDto bankAccountToBankAccountOutDto(BankAccount bankAccount) {
+        BankAccountOutDto bankAccountOut = new BankAccountOutDto();
+
+        bankAccountOut.setBankAccountId(bankAccount.getId());
+        bankAccountOut.setName(bankAccount.getName());
+        bankAccountOut.setUserId(bankAccount.getUserId());
+        bankAccountOut.setValue(bankAccount.getValue());
+        bankAccountOut.setDateOpened(bankAccount.getDateOpened());
+
+        return bankAccountOut;
+    }
+
+    public static BankTransactionOutDto bankTransactionToBankTransactionOutDto(BankTransaction bankTransaction) {
+        BankTransactionOutDto bankTransactionOut = new BankTransactionOutDto();
+
+        bankTransactionOut.setBankTransactionId(bankTransaction.getId());
+        bankTransactionOut.setUserId(bankTransaction.getUserId());
+        bankTransactionOut.setAccountId(bankTransaction.getAccountId());
+        bankTransactionOut.setBankTransactionType(bankTransaction.getBankTransactionType());
+        bankTransactionOut.setTransactionDate(bankTransaction.getTransactionDate());
+        bankTransactionOut.setValue(bankTransaction.getValue());
+        bankTransactionOut.setCategory(bankTransaction.getCategory());
+        bankTransactionOut.setOccurrenceType(bankTransaction.getOccurrenceType());
+        bankTransactionOut.setDateOfNextRecurrence(bankTransaction.getDateOfNextRecurrence());
+
+        return bankTransactionOut;
     }
 }

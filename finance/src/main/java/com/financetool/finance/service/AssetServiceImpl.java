@@ -1,10 +1,8 @@
 package com.financetool.finance.service;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.financetool.finance.dto.AssetCreateRequest;
 import com.financetool.finance.exception.ResourceNotFoundException;
 import com.financetool.finance.model.Asset;
-import com.financetool.finance.model.User;
 import com.financetool.finance.repository.AssetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

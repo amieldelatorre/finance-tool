@@ -10,7 +10,7 @@ public class DebtRepayment {
     private Integer debtId;
     private Double value;
     @Enumerated(EnumType.STRING)
-    private OccurenceType occurenceType;
+    private OccurrenceType occurrenceType;
 
     public Integer getId() {
         return debtRepaymentId;
@@ -24,8 +24,8 @@ public class DebtRepayment {
         return value;
     }
 
-    public OccurenceType getOccurenceType() {
-        return occurenceType;
+    public OccurrenceType getOccurrenceType() {
+        return occurrenceType;
     }
 
     public void setDebtId(Integer debtId) {
@@ -36,7 +36,7 @@ public class DebtRepayment {
         this.value = value;
     }
 
-    public void setOccurenceType(OccurenceType occurenceType) {
-        this.occurenceType = occurenceType;
+    public void setOccurrenceType(OccurrenceType occurrenceType) {
+        this.occurrenceType = occurrenceType;
     }
 }

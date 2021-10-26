@@ -1,6 +1,6 @@
 package com.financetool.finance.model;
 
-public enum OccurenceType {
+public enum OccurrenceType {
     ONCE,
     DAILY,
     WEEKLY,

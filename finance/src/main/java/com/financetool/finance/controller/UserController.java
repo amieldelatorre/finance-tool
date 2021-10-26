@@ -60,11 +60,4 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @GetMapping(path = "/users/test")
-    public Boolean test() {
-        Boolean t = InputValidation.checkEmailExists("test@testmail.com");
-        return t;
-    }
-
 }

@@ -9,7 +9,10 @@ import com.financetool.finance.repository.DebtRepaymentRepository;
 import com.financetool.finance.repository.DebtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +47,10 @@ public class DebtServiceImpl implements DebtService{
         Optional<Debt> debt = debtRepository.findById(debtId);
 
         if (!debt.isPresent()) {
-            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.", request);
         }
 
         return debt;
@@ -61,7 +67,10 @@ public class DebtServiceImpl implements DebtService{
         Optional<Debt> debt = debtRepository.findById(debtId);
 
         if (!debt.isPresent()) {
-            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.", request);
         }
         else {
             debt.get().setUserId(debtRequest.getUserId());
@@ -77,7 +86,10 @@ public class DebtServiceImpl implements DebtService{
         Optional<Debt> debt = debtRepository.findById(debtId);
 
         if (!debt.isPresent()) {
-            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.", request);
         }
         else {
             debtRepository.delete(debt.get());
@@ -89,7 +101,10 @@ public class DebtServiceImpl implements DebtService{
         Optional<Debt> debt = debtRepository.findById(debtRepayment.getDebtId());
 
         if (!debt.isPresent()) {
-            throw new ResourceNotFoundException("Debt id " + debtRepayment.getDebtId() + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt id " + debtRepayment.getDebtId() + " cannot be found.", request);
         }
         else {
             DebtRepayment newDebtRepayment = new DebtRepayment();
@@ -117,7 +132,10 @@ public class DebtServiceImpl implements DebtService{
         Optional<DebtRepayment> debtRepayment = debtRepaymentRepository.findById(debtRepaymentId);
 
         if (!debtRepayment.isPresent()) {
-            throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
         }
 
         return debtRepayment;
@@ -128,7 +146,10 @@ public class DebtServiceImpl implements DebtService{
         Optional<Debt> debt = debtRepository.findById(debtId);
 
         if (!debt.isPresent()) {
-            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.", request);
         }
         else {
             List<DebtRepayment> debtRepayments = debtRepaymentRepository.findByDebtId(debtId);
@@ -141,7 +162,10 @@ public class DebtServiceImpl implements DebtService{
         Optional<DebtRepayment> debtRepayment = getDebtRepaymentById(debtRepaymentId);
 
         if (!debtRepayment.isPresent()) {
-            throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
         }
         else {
             Optional<Debt> debt = getDebtById(debtRepayment.get().getDebtId());
@@ -156,13 +180,19 @@ public class DebtServiceImpl implements DebtService{
         Optional<DebtRepayment> debtRepayment = getDebtRepaymentById(debtRepaymentId);
 
         if (!debtRepayment.isPresent()) {
-            throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
         }
         else {
             Optional<Debt> updatedDebt = getDebtById(debtRepaymentCreateRequest.getDebtId());
 
             if (!updatedDebt.isPresent()) {
-                throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.");
+                ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+                HttpServletRequest request = requestAttributes.getRequest();
+
+                throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
             }
 
             Optional<Debt> debt = getDebtById(debtRepayment.get().getDebtId());

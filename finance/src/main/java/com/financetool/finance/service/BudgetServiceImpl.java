@@ -9,7 +9,10 @@ import com.financetool.finance.repository.BudgetCategoryRepository;
 import com.financetool.finance.repository.BudgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +45,12 @@ public class BudgetServiceImpl implements BudgetService {
     public Optional<Budget> getBudgetById(Integer budgetId) {
         Optional<Budget> budget = budgetRepository.findById(budgetId);
 
-        if (!budget.isPresent())
-            throw new ResourceNotFoundException("Budget id " + budgetId + " cannot be found");
+        if (!budget.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Budget id " + budgetId + " cannot be found", request);
+        }
 
         return budget;
     }
@@ -57,8 +64,12 @@ public class BudgetServiceImpl implements BudgetService {
     public Optional<Budget> updateBudget(Integer budgetId, BudgetCreateRequest budgetCreateRequest) {
         Optional<Budget> budget = budgetRepository.findById(budgetId);
 
-        if (!budget.isPresent())
-            throw new ResourceNotFoundException("Budget id " + budgetId + " cannot be found");
+        if (!budget.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Budget id " + budgetId + " cannot be found", request);
+        }
 
         budget.get().setUserId(budgetCreateRequest.getUserId());
         budget.get().setName(budgetCreateRequest.getName());
@@ -72,8 +83,12 @@ public class BudgetServiceImpl implements BudgetService {
     public void deleteBudget(Integer budgetId) {
         Optional<Budget> budget = budgetRepository.findById(budgetId);
 
-        if (!budget.isPresent())
-            throw new ResourceNotFoundException("Budget id " + budgetId + " cannot be found");
+        if (!budget.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Budget id " + budgetId + " cannot be found", request);
+        }
 
         budgetRepository.delete(budget.get());
     }
@@ -101,8 +116,12 @@ public class BudgetServiceImpl implements BudgetService {
     public Optional<BudgetCategory> getBudgetCategoryById(Integer budgetCategoryId) {
         Optional<BudgetCategory> budgetCategory = budgetCategoryRepository.findById(budgetCategoryId);
 
-        if (!budgetCategory.isPresent())
-            throw new ResourceNotFoundException("Budget id " + budgetCategoryId + " cannot be found");
+        if (!budgetCategory.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Budget id " + budgetCategoryId + " cannot be found", request);
+        }
 
         return budgetCategory;
 
@@ -117,8 +136,13 @@ public class BudgetServiceImpl implements BudgetService {
     public Optional<BudgetCategory> updateBudgetCategory(Integer budgetCategoryId, BudgetCategoryCreateRequest budgetCategoryCreateRequest) {
         Optional<BudgetCategory> budgetCategory = budgetCategoryRepository.findById(budgetCategoryId);
 
-        if (!budgetCategory.isPresent())
-            throw new ResourceNotFoundException("Budget id " + budgetCategoryId + " cannot be found");
+        if (!budgetCategory.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Budget id " + budgetCategoryId + " cannot be found", request);
+        }
+
 
         budgetCategory.get().setBudgetId(budgetCategoryCreateRequest.getBudgetId());
         budgetCategory.get().setName(budgetCategoryCreateRequest.getName());
@@ -133,8 +157,12 @@ public class BudgetServiceImpl implements BudgetService {
     public void deleteBudgetCategory(Integer budgetCategoryId) {
         Optional<BudgetCategory> budgetCategory = budgetCategoryRepository.findById(budgetCategoryId);
 
-        if (!budgetCategory.isPresent())
-            throw new ResourceNotFoundException("Budget id " + budgetCategoryId + " cannot be found");
+        if (!budgetCategory.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Budget id " + budgetCategoryId + " cannot be found", request);
+        }
 
         budgetCategoryRepository.delete(budgetCategory.get());
     }

@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String message, HttpServletRequest request) {
+@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+public class InternalServerException extends RuntimeException{
+    public InternalServerException(String message, HttpServletRequest request) {
         super(message);
     }
 }

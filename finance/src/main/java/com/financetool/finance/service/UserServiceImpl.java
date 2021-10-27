@@ -6,7 +6,11 @@ import com.financetool.finance.model.User;
 import com.financetool.finance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +43,10 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) {
-            throw new ResourceNotFoundException("User id " + userId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("User id " + userId + " cannot be found.", request);
         }
 
         return user;
@@ -50,7 +57,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) {
-            throw new ResourceNotFoundException("User id " + userId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+            throw new ResourceNotFoundException("User id " + userId + " cannot be found.", request);
         }
         else {
             user.get().setFirstName(userRequest.getFirstName());
@@ -68,7 +77,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) {
-            throw new ResourceNotFoundException("User id " + userId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+            throw new ResourceNotFoundException("User id " + userId + " cannot be found.", request);
         }
         else {
             userRepository.delete(user.get());
@@ -77,7 +88,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email){
-        User user = userRepository.findByEmail(email);
-        return user;
+        return userRepository.findByEmail(email);
     }
 }

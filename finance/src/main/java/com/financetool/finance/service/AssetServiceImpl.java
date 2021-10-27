@@ -6,7 +6,10 @@ import com.financetool.finance.model.Asset;
 import com.financetool.finance.repository.AssetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +40,10 @@ public class AssetServiceImpl implements AssetService {
         Optional<Asset> asset = assetRepository.findById(assetId);
 
         if (!asset.isPresent()) {
-            throw new ResourceNotFoundException("Asset id " + assetId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Asset id " + assetId + " cannot be found.", request);
         }
 
         return asset;
@@ -54,7 +60,10 @@ public class AssetServiceImpl implements AssetService {
         Optional<Asset> asset = assetRepository.findById(assetId);
 
         if (!asset.isPresent()) {
-            throw new ResourceNotFoundException("Asset id " + assetId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Asset id " + assetId + " cannot be found.", request);
         }
         else {
             asset.get().setUserId(assetRequest.getUserId());
@@ -70,7 +79,10 @@ public class AssetServiceImpl implements AssetService {
         Optional<Asset> asset = assetRepository.findById(assetId);
 
         if (!asset.isPresent()) {
-            throw new ResourceNotFoundException("Asset id " + assetId + " cannot be found.");
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Asset id " + assetId + " cannot be found.", request);
         }
         else {
             assetRepository.delete(asset.get());

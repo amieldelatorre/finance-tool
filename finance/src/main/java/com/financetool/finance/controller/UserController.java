@@ -1,5 +1,7 @@
 package com.financetool.finance.controller;
 
+import com.financetool.finance.exception.BadRequestException;
+import com.financetool.finance.exception.InternalServerException;
 import com.financetool.finance.service.UserService;
 import com.financetool.finance.util.InputValidation;
 import com.financetool.finance.util.OutputFormatter;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +26,15 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(path = "/users", consumes = "application/json", produces = "application/json")
-    public @ResponseStatus(HttpStatus.CREATED) UserOutDto addNewUser(@RequestBody @Valid UserCreateRequest user) {
-        User newUser = userService.createUser(user);
+    public @ResponseStatus(HttpStatus.CREATED) UserOutDto addNewUser(@RequestBody @Valid UserCreateRequest user, HttpServletRequest request) {
+        boolean validUserCreateRequest = InputValidation.isValidUserCreateRequest(user, request);
 
-        return OutputFormatter.userToUserOutDto(newUser);
+        if (validUserCreateRequest) {
+            User newUser = userService.createUser(user);
+            return OutputFormatter.userToUserOutDto(newUser);
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @GetMapping(path = "/users", produces = "application/json")
@@ -48,10 +56,15 @@ public class UserController {
     }
 
     @PutMapping(path = "/users/{userId}", consumes = "application/json", produces = "application/json")
-    public UserOutDto updateUserById(@PathVariable(value="userId") Integer userId, @RequestBody UserCreateRequest userRequest) {
-        Optional<User> user = userService.updateUser(userId, userRequest);
+    public UserOutDto updateUserById(@PathVariable(value="userId") Integer userId, @RequestBody UserCreateRequest userRequest, HttpServletRequest request) {
+        boolean validUserCreateRequest = InputValidation.isValidUserCreateRequest(userRequest, request);
 
-        return OutputFormatter.userToUserOutDto(user.get());
+        if (validUserCreateRequest) {
+            Optional<User> user = userService.updateUser(userId, userRequest);
+            return OutputFormatter.userToUserOutDto(user.get());
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @DeleteMapping(path = "/users/{userId}")

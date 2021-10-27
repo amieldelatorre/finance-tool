@@ -6,7 +6,10 @@ import com.financetool.finance.model.Investment;
 import com.financetool.finance.repository.InvestmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +39,12 @@ public class InvestmentServiceImpl implements InvestmentService{
     public Optional<Investment> getInvestmentById(Integer investmentId) {
         Optional<Investment> investment = investmentRepository.findById(investmentId);
 
-        if (!investment.isPresent())
-            throw new ResourceNotFoundException("Investment id " + investmentId + " cannot be found.");
+        if (!investment.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Investment id " + investmentId + " cannot be found.", request);
+        }
 
         return investment;
     }
@@ -51,8 +58,12 @@ public class InvestmentServiceImpl implements InvestmentService{
     public Optional<Investment> updateInvestment(Integer investmentId, InvestmentCreateRequest investmentCreateRequest) {
         Optional<Investment> investment = investmentRepository.findById(investmentId);
 
-        if (!investment.isPresent())
-            throw new ResourceNotFoundException("Investment id " + investmentId + " cannot be found.");
+        if (!investment.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Investment id " + investmentId + " cannot be found.", request);
+        }
 
         System.out.println(investment.get().getId());
         System.out.println(investmentCreateRequest.getUserId());
@@ -71,8 +82,12 @@ public class InvestmentServiceImpl implements InvestmentService{
     public void deleteInvestment(Integer investmentId) {
         Optional<Investment> investment = investmentRepository.findById(investmentId);
 
-        if (!investment.isPresent())
-            throw new ResourceNotFoundException("Investment id " + investmentId + " cannot be found.");
+        if (!investment.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Investment id " + investmentId + " cannot be found.", request);
+        }
 
         investmentRepository.delete(investment.get());
     }

@@ -11,7 +11,10 @@ import com.financetool.finance.repository.BankAccountRepository;
 import com.financetool.finance.repository.BankTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,8 +48,13 @@ public class BankServiceImpl implements BankService {
     public Optional<BankAccount> getBankAccountById(Integer bankAccountId) {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountId);
 
-        if (!bankAccount.isPresent())
-            throw new ResourceNotFoundException("Bank Account id " + bankAccountId + " cannot be found");
+        if (!bankAccount.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Account id " + bankAccountId + " cannot be found", request);
+        }
+
 
         return bankAccount;
     }
@@ -60,8 +68,12 @@ public class BankServiceImpl implements BankService {
     public Optional<BankAccount> updateBankAccount(Integer bankAccountId, BankAccountCreateRequest bankAccountCreateRequest) {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountId);
 
-        if (!bankAccount.isPresent())
-            throw new ResourceNotFoundException("Bank Account id " + bankAccountId + " cannot be found");
+        if (!bankAccount.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Account id " + bankAccountId + " cannot be found", request);
+        }
 
         bankAccount.get().setName(bankAccountCreateRequest.getName());
         bankAccount.get().setUserId(bankAccountCreateRequest.getUserId());
@@ -76,8 +88,12 @@ public class BankServiceImpl implements BankService {
     public void deleteBankAccount(Integer bankAccountId) {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountId);
 
-        if (!bankAccount.isPresent())
-            throw new ResourceNotFoundException("Bank Account id " + bankAccountId + " cannot be found");
+        if (!bankAccount.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Account id " + bankAccountId + " cannot be found", request);
+        }
 
         bankAccountRepository.delete(bankAccount.get());
     }
@@ -87,8 +103,12 @@ public class BankServiceImpl implements BankService {
     public BankTransaction createBankTransaction(BankTransactionCreateRequest bankTransactionCreateRequest) {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankTransactionCreateRequest.getAccountId());
 
-        if (!bankAccount.isPresent())
-            throw new ResourceNotFoundException("Bank Account id " + bankTransactionCreateRequest.getAccountId() + " cannot be found");
+        if (!bankAccount.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Account id " + bankTransactionCreateRequest.getAccountId() + " cannot be found", request);
+        }
 
         double newBankAccountValue;
         if (bankTransactionCreateRequest.getBankTransactionType() == BankTransactionType.WITHDRAWAL)
@@ -123,8 +143,12 @@ public class BankServiceImpl implements BankService {
     public Optional<BankTransaction> getBankTransactionById(Integer bankTransactionId) {
         Optional<BankTransaction> bankTransaction = bankTransactionRepository.findById(bankTransactionId);
 
-        if (!bankTransaction.isPresent())
-            throw new ResourceNotFoundException("Bank Transaction id " + bankTransaction + " cannot be found");
+        if (!bankTransaction.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Transaction id " + bankTransaction + " cannot be found", request);
+        }
 
         return bankTransaction;
     }
@@ -163,8 +187,12 @@ public class BankServiceImpl implements BankService {
     public Optional<BankTransaction> updateBankTransaction(Integer bankTransactionId, BankTransactionCreateRequest bankTransactionCreateRequest) {
         Optional<BankTransaction> bankTransaction = bankTransactionRepository.findById(bankTransactionId);
 
-        if (!bankTransaction.isPresent())
-            throw new ResourceNotFoundException("Bank Transaction id " + bankTransaction + " cannot be found");
+        if (!bankTransaction.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Transaction id " + bankTransaction + " cannot be found", request);
+        }
 
         BankAccount oldBankAccount = bankAccountRepository.getById(bankTransaction.get().getAccountId());
         double oldBankAccountValue;
@@ -178,8 +206,13 @@ public class BankServiceImpl implements BankService {
         bankAccountRepository.save(oldBankAccount);
 
         Optional<BankAccount> newBankAccount = bankAccountRepository.findById(bankTransactionCreateRequest.getAccountId());
-        if (!newBankAccount.isPresent())
-            throw new ResourceNotFoundException("Bank Account id " + bankTransactionCreateRequest.getAccountId() + " cannot be found");
+        if (!newBankAccount.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Account id " + bankTransactionCreateRequest.getAccountId() + " cannot be found", request);
+        }
+
 
         double newBankAccountValue;
         if (bankTransactionCreateRequest.getBankTransactionType() == BankTransactionType.WITHDRAWAL)
@@ -207,8 +240,13 @@ public class BankServiceImpl implements BankService {
     public void deleteBankTransaction(Integer bankTransactionId) {
         Optional<BankTransaction> bankTransaction = bankTransactionRepository.findById(bankTransactionId);
 
-        if (!bankTransaction.isPresent())
-            throw new ResourceNotFoundException("Bank Transaction id " + bankTransaction + " cannot be found");
+        if (!bankTransaction.isPresent()) {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletRequest request = requestAttributes.getRequest();
+
+            throw new ResourceNotFoundException("Bank Transaction id " + bankTransaction + " cannot be found", request);
+        }
+
 
         bankTransactionRepository.delete(bankTransaction.get());
     }

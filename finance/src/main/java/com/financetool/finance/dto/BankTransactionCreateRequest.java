@@ -11,12 +11,10 @@ public class BankTransactionCreateRequest {
     private Integer accountId;
     @Enumerated(EnumType.STRING)
     private BankTransactionType bankTransactionType;
-    private Date transactionDate;
     private Double value;
     private String category;
     @Enumerated(EnumType.STRING)
     private OccurrenceType occurrenceType;
-    private Date dateOfNextRecurrence;
 
     public Integer getUserId() {
         return userId;
@@ -28,10 +26,6 @@ public class BankTransactionCreateRequest {
 
     public BankTransactionType getBankTransactionType() {
         return bankTransactionType;
-    }
-
-    public Date getTransactionDate() {
-        return transactionDate;
     }
 
     public Double getValue() {
@@ -46,9 +40,6 @@ public class BankTransactionCreateRequest {
         return occurrenceType;
     }
 
-    public Date getDateOfNextRecurrence() {
-        return dateOfNextRecurrence;
-    }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
@@ -62,10 +53,6 @@ public class BankTransactionCreateRequest {
         this.bankTransactionType = bankTransactionType;
     }
 
-    public void setTransactionDate(Date transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
     public void setValue(Double value) {
         this.value = value;
     }
@@ -76,9 +63,5 @@ public class BankTransactionCreateRequest {
 
     public void setOccurrenceType(OccurrenceType occurrenceType) {
         this.occurrenceType = occurrenceType;
-    }
-
-    public void setDateOfNextRecurrence(Date dateOfNextRecurrence) {
-        this.dateOfNextRecurrence = dateOfNextRecurrence;
     }
 }

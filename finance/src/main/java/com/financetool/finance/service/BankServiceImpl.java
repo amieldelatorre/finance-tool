@@ -33,7 +33,7 @@ public class BankServiceImpl implements BankService {
         newBankAccount.setName(bankAccountCreateRequest.getName());
         newBankAccount.setUserId(bankAccountCreateRequest.getUserId());
         newBankAccount.setValue(bankAccountCreateRequest.getValue());
-        newBankAccount.setDateOpened(bankAccountCreateRequest.getDateOpened());
+        newBankAccount.setDateOpened(new Date());
         bankAccountRepository.save(newBankAccount);
 
         return newBankAccount;
@@ -45,7 +45,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Optional<BankAccount> getBankAccountById(Integer bankAccountId) {
+    public BankAccount getBankAccountById(Integer bankAccountId) {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountId);
 
         if (!bankAccount.isPresent()) {
@@ -56,7 +56,7 @@ public class BankServiceImpl implements BankService {
         }
 
 
-        return bankAccount;
+        return bankAccount.get();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Optional<BankAccount> updateBankAccount(Integer bankAccountId, BankAccountCreateRequest bankAccountCreateRequest) {
+    public BankAccount updateBankAccount(Integer bankAccountId, BankAccountCreateRequest bankAccountCreateRequest) {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountId);
 
         if (!bankAccount.isPresent()) {
@@ -78,10 +78,9 @@ public class BankServiceImpl implements BankService {
         bankAccount.get().setName(bankAccountCreateRequest.getName());
         bankAccount.get().setUserId(bankAccountCreateRequest.getUserId());
         bankAccount.get().setValue(bankAccountCreateRequest.getValue());
-        bankAccount.get().setDateOpened(bankAccountCreateRequest.getDateOpened());
         bankAccountRepository.save(bankAccount.get());
 
-        return bankAccount;
+        return bankAccount.get();
     }
 
     @Override
@@ -124,11 +123,10 @@ public class BankServiceImpl implements BankService {
         newBankTransaction.setUserId(bankTransactionCreateRequest.getUserId());
         newBankTransaction.setAccountId(bankTransactionCreateRequest.getAccountId());
         newBankTransaction.setBankTransactionType(bankTransactionCreateRequest.getBankTransactionType());
-        newBankTransaction.setTransactionDate(bankTransactionCreateRequest.getTransactionDate());
+        newBankTransaction.setTransactionDate(new Date());
         newBankTransaction.setValue(bankTransactionCreateRequest.getValue());
         newBankTransaction.setCategory(bankTransactionCreateRequest.getCategory());
         newBankTransaction.setOccurrenceType(bankTransactionCreateRequest.getOccurrenceType());
-        newBankTransaction.setDateOfNextRecurrence(bankTransactionCreateRequest.getDateOfNextRecurrence());
         bankTransactionRepository.save(newBankTransaction);
 
         return newBankTransaction;
@@ -140,7 +138,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Optional<BankTransaction> getBankTransactionById(Integer bankTransactionId) {
+    public BankTransaction getBankTransactionById(Integer bankTransactionId) {
         Optional<BankTransaction> bankTransaction = bankTransactionRepository.findById(bankTransactionId);
 
         if (!bankTransaction.isPresent()) {
@@ -150,7 +148,7 @@ public class BankServiceImpl implements BankService {
             throw new ResourceNotFoundException("Bank Transaction id " + bankTransaction + " cannot be found", request);
         }
 
-        return bankTransaction;
+        return bankTransaction.get();
     }
 
     @Override
@@ -184,7 +182,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Optional<BankTransaction> updateBankTransaction(Integer bankTransactionId, BankTransactionCreateRequest bankTransactionCreateRequest) {
+    public BankTransaction updateBankTransaction(Integer bankTransactionId, BankTransactionCreateRequest bankTransactionCreateRequest) {
         Optional<BankTransaction> bankTransaction = bankTransactionRepository.findById(bankTransactionId);
 
         if (!bankTransaction.isPresent()) {
@@ -226,14 +224,12 @@ public class BankServiceImpl implements BankService {
         bankTransaction.get().setUserId(bankTransactionCreateRequest.getUserId());
         bankTransaction.get().setAccountId(bankTransactionCreateRequest.getAccountId());
         bankTransaction.get().setBankTransactionType(bankTransactionCreateRequest.getBankTransactionType());
-        bankTransaction.get().setTransactionDate(bankTransactionCreateRequest.getTransactionDate());
         bankTransaction.get().setValue(bankTransactionCreateRequest.getValue());
         bankTransaction.get().setCategory(bankTransactionCreateRequest.getCategory());
         bankTransaction.get().setOccurrenceType(bankTransactionCreateRequest.getOccurrenceType());
-        bankTransaction.get().setDateOfNextRecurrence(bankTransactionCreateRequest.getDateOfNextRecurrence());
         bankTransactionRepository.save(bankTransaction.get());
 
-        return bankTransaction;
+        return bankTransaction.get();
     }
 
     @Override

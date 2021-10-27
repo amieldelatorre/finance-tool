@@ -10,8 +10,7 @@ public class BankAccountCreateRequest {
     private Integer userId;
     @NotEmpty
     private Double value;
-    @NotEmpty
-    private Date dateOpened;
+
 
     public String getName() {
         return name;
@@ -23,10 +22,6 @@ public class BankAccountCreateRequest {
 
     public Double getValue() {
         return value;
-    }
-
-    public Date getDateOpened() {
-        return dateOpened;
     }
 
     public void setName(String name) {
@@ -41,7 +36,4 @@ public class BankAccountCreateRequest {
         this.value = value;
     }
 
-    public void setDateOpened(Date dateOpened) {
-        this.dateOpened = dateOpened;
-    }
 }

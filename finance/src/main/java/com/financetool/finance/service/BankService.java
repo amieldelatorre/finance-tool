@@ -16,20 +16,20 @@ import java.util.Optional;
 public interface BankService {
     BankAccount createBankAccount(BankAccountCreateRequest bankAccountCreateRequest);
     List<BankAccount> getAllBankAccounts();
-    Optional<BankAccount> getBankAccountById(Integer bankAccountId);
+    BankAccount getBankAccountById(Integer bankAccountId);
     List<BankAccount> getBankAccountByUserId(Integer userId);
-    Optional<BankAccount> updateBankAccount(Integer bankAccountId, BankAccountCreateRequest bankAccountCreateRequest);
+    BankAccount updateBankAccount(Integer bankAccountId, BankAccountCreateRequest bankAccountCreateRequest);
     void deleteBankAccount(Integer bankAccountId);
 
     BankTransaction createBankTransaction(BankTransactionCreateRequest bankTransactionCreateRequest);
     List<BankTransaction> getAllBankTransactions();
-    Optional<BankTransaction> getBankTransactionById(Integer bankTransactionId);
+    BankTransaction getBankTransactionById(Integer bankTransactionId);
     List<BankTransaction> getBankTransactionByUserid(Integer userId);
     List<BankTransaction> getBankTransactionByAccountId(Integer accountId);
     List<BankTransaction> getBankTransactionByBankTransactionType(BankTransactionType bankTransactionType);
     List<BankTransaction> getBankTransactionByTransactionDate(Date transactionDate);
     List<BankTransaction> getBankTransactionByOccurrenceType(OccurrenceType occurrenceType);
     List<BankTransaction> getBankTransactionByDateOfNextRecurrence(Date dateOfNextRecurrence);
-    Optional<BankTransaction> updateBankTransaction(Integer bankTransactionId, BankTransactionCreateRequest bankTransactionCreateRequest);
+    BankTransaction updateBankTransaction(Integer bankTransactionId, BankTransactionCreateRequest bankTransactionCreateRequest);
     void deleteBankTransaction(Integer bankTransactionId);
 }

@@ -36,7 +36,7 @@ public class InvestmentServiceImpl implements InvestmentService{
     }
 
     @Override
-    public Optional<Investment> getInvestmentById(Integer investmentId) {
+    public Investment getInvestmentById(Integer investmentId) {
         Optional<Investment> investment = investmentRepository.findById(investmentId);
 
         if (!investment.isPresent()) {
@@ -46,7 +46,7 @@ public class InvestmentServiceImpl implements InvestmentService{
             throw new ResourceNotFoundException("Investment id " + investmentId + " cannot be found.", request);
         }
 
-        return investment;
+        return investment.get();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class InvestmentServiceImpl implements InvestmentService{
     }
 
     @Override
-    public Optional<Investment> updateInvestment(Integer investmentId, InvestmentCreateRequest investmentCreateRequest) {
+    public Investment updateInvestment(Integer investmentId, InvestmentCreateRequest investmentCreateRequest) {
         Optional<Investment> investment = investmentRepository.findById(investmentId);
 
         if (!investment.isPresent()) {
@@ -75,7 +75,7 @@ public class InvestmentServiceImpl implements InvestmentService{
         investment.get().setValue(investmentCreateRequest.getValue());
         investmentRepository.save(investment.get());
 
-        return investment;
+        return investment.get();
     }
 
     @Override

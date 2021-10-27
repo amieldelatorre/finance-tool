@@ -43,7 +43,7 @@ public class DebtServiceImpl implements DebtService{
     }
 
     @Override
-    public Optional<Debt> getDebtById(Integer debtId) {
+    public Debt getDebtById(Integer debtId) {
         Optional<Debt> debt = debtRepository.findById(debtId);
 
         if (!debt.isPresent()) {
@@ -53,7 +53,7 @@ public class DebtServiceImpl implements DebtService{
             throw new ResourceNotFoundException("Debt id " + debtId + " cannot be found.", request);
         }
 
-        return debt;
+        return debt.get();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class DebtServiceImpl implements DebtService{
     }
 
     @Override
-    public Optional<Debt> updateDebt(Integer debtId, DebtCreateRequest debtRequest) {
+    public Debt updateDebt(Integer debtId, DebtCreateRequest debtRequest) {
         Optional<Debt> debt = debtRepository.findById(debtId);
 
         if (!debt.isPresent()) {
@@ -78,7 +78,7 @@ public class DebtServiceImpl implements DebtService{
             debt.get().setDescription(debtRequest.getDescription());
             debtRepository.save(debt.get());
         }
-        return debt;
+        return debt.get();
     }
 
     @Override
@@ -128,7 +128,7 @@ public class DebtServiceImpl implements DebtService{
     }
 
     @Override
-    public Optional<DebtRepayment> getDebtRepaymentById(Integer debtRepaymentId) {
+    public DebtRepayment getDebtRepaymentById(Integer debtRepaymentId) {
         Optional<DebtRepayment> debtRepayment = debtRepaymentRepository.findById(debtRepaymentId);
 
         if (!debtRepayment.isPresent()) {
@@ -138,7 +138,7 @@ public class DebtServiceImpl implements DebtService{
             throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
         }
 
-        return debtRepayment;
+        return debtRepayment.get();
     }
 
     @Override
@@ -159,7 +159,7 @@ public class DebtServiceImpl implements DebtService{
 
     @Override
     public void deleteDebtRepayment(Integer debtRepaymentId) {
-        Optional<DebtRepayment> debtRepayment = getDebtRepaymentById(debtRepaymentId);
+        Optional<DebtRepayment> debtRepayment = debtRepaymentRepository.findById(debtRepaymentId);
 
         if (!debtRepayment.isPresent()) {
             ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -168,7 +168,7 @@ public class DebtServiceImpl implements DebtService{
             throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
         }
         else {
-            Optional<Debt> debt = getDebtById(debtRepayment.get().getDebtId());
+            Optional<Debt> debt = debtRepository.findById(debtRepayment.get().getDebtId());
             debt.get().setValue(debt.get().getValue() + debtRepayment.get().getValue());
             debtRepository.save(debt.get());
             debtRepaymentRepository.delete(debtRepayment.get());
@@ -176,8 +176,8 @@ public class DebtServiceImpl implements DebtService{
     }
 
     @Override
-    public Optional<DebtRepayment> updateDebtRepayment(Integer debtRepaymentId, DebtRepaymentCreateRequest debtRepaymentCreateRequest) {
-        Optional<DebtRepayment> debtRepayment = getDebtRepaymentById(debtRepaymentId);
+    public DebtRepayment updateDebtRepayment(Integer debtRepaymentId, DebtRepaymentCreateRequest debtRepaymentCreateRequest) {
+        Optional<DebtRepayment> debtRepayment = debtRepaymentRepository.findById(debtRepaymentId);
 
         if (!debtRepayment.isPresent()) {
             ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -186,7 +186,7 @@ public class DebtServiceImpl implements DebtService{
             throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
         }
         else {
-            Optional<Debt> updatedDebt = getDebtById(debtRepaymentCreateRequest.getDebtId());
+            Optional<Debt> updatedDebt = debtRepository.findById(debtRepaymentCreateRequest.getDebtId());
 
             if (!updatedDebt.isPresent()) {
                 ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -195,7 +195,7 @@ public class DebtServiceImpl implements DebtService{
                 throw new ResourceNotFoundException("Debt Repayment id " + debtRepaymentId + " cannot be found.", request);
             }
 
-            Optional<Debt> debt = getDebtById(debtRepayment.get().getDebtId());
+            Optional<Debt> debt = debtRepository.findById(debtRepayment.get().getDebtId());
             Double oldDebtValue = debt.get().getValue() + debtRepayment.get().getValue();
             debt.get().setValue(oldDebtValue);
             debtRepository.save(debt.get());
@@ -208,7 +208,7 @@ public class DebtServiceImpl implements DebtService{
             updatedDebt.get().setValue(updatedDebt.get().getValue() - debtRepaymentCreateRequest.getValue());
             debtRepository.save(updatedDebt.get());
 
-            return debtRepayment;
+            return debtRepayment.get();
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.financetool.finance.controller;
 
-import com.financetool.finance.exception.BadRequestException;
 import com.financetool.finance.exception.InternalServerException;
 import com.financetool.finance.service.UserService;
 import com.financetool.finance.util.InputValidation;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -50,9 +48,9 @@ public class UserController {
 
     @GetMapping(path = "/users/{userId}", produces = "application/json")
     public UserOutDto getUserById(@PathVariable(value="userId") Integer userId) {
-        Optional<User> user = userService.getUserById(userId);
+        User user = userService.getUserById(userId);
 
-        return OutputFormatter.userToUserOutDto(user.get());
+        return OutputFormatter.userToUserOutDto(user);
     }
 
     @PutMapping(path = "/users/{userId}", consumes = "application/json", produces = "application/json")
@@ -60,8 +58,8 @@ public class UserController {
         boolean validUserCreateRequest = InputValidation.isValidUserCreateRequest(userRequest, request);
 
         if (validUserCreateRequest) {
-            Optional<User> user = userService.updateUser(userId, userRequest);
-            return OutputFormatter.userToUserOutDto(user.get());
+            User user = userService.updateUser(userId, userRequest);
+            return OutputFormatter.userToUserOutDto(user);
         }
         else
             throw new InternalServerException("Sorry something went wrong.", request);

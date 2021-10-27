@@ -2,18 +2,20 @@ package com.financetool.finance.controller;
 
 import com.financetool.finance.dto.AssetCreateRequest;
 import com.financetool.finance.dto.AssetOutDto;
+import com.financetool.finance.exception.InternalServerException;
 import com.financetool.finance.model.Asset;
 import com.financetool.finance.service.AssetService;
+import com.financetool.finance.util.InputValidation;
 import com.financetool.finance.util.OutputFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -23,10 +25,15 @@ public class AssetController {
 
     @PostMapping(path = "/assets", consumes = "application/json", produces = "application/json")
     public @ResponseStatus(HttpStatus.CREATED)
-    AssetOutDto addNewAsset(@RequestBody @Valid AssetCreateRequest asset) {
-        Asset newAsset = assetService.createAsset(asset);
+    AssetOutDto addNewAsset(@RequestBody @Valid AssetCreateRequest asset, HttpServletRequest request) {
+        boolean validAssetCreateRequest = InputValidation.isValidAssetCreateRequest(asset, request);
 
-        return OutputFormatter.assetToAssetOutDto(newAsset);
+        if (validAssetCreateRequest) {
+            Asset newAsset = assetService.createAsset(asset);
+            return OutputFormatter.assetToAssetOutDto(newAsset);
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @GetMapping(path = "/assets", produces = "application/json")
@@ -42,9 +49,9 @@ public class AssetController {
 
     @GetMapping(path = "/assets/{assetId}", produces = "application/json")
     public AssetOutDto getAssetById(@PathVariable(value="assetId") Integer assetId) {
-        Optional<Asset> asset = assetService.getAssetById(assetId);
+        Asset asset = assetService.getAssetById(assetId);
 
-        return OutputFormatter.assetToAssetOutDto(asset.get());
+        return OutputFormatter.assetToAssetOutDto(asset);
     }
 
     @GetMapping(path = "/users/{userId}/assets", produces = "application/json")
@@ -59,10 +66,15 @@ public class AssetController {
     }
 
     @PutMapping(path = "/assets/{assetId}", consumes = "application/json", produces = "application/json")
-    public AssetOutDto updateAssetById(@PathVariable(value="assetId") Integer assetId, @RequestBody AssetCreateRequest assetRequest) {
-        Optional<Asset> asset = assetService.updateAsset(assetId, assetRequest);
+    public AssetOutDto updateAssetById(@PathVariable(value="assetId") Integer assetId, @RequestBody AssetCreateRequest assetRequest, HttpServletRequest request) {
+        boolean ValidAssetCreateRequest = InputValidation.isValidAssetCreateRequest(assetRequest, request);
 
-        return OutputFormatter.assetToAssetOutDto(asset.get());
+        if (ValidAssetCreateRequest) {
+            Asset asset = assetService.updateAsset(assetId, assetRequest);
+            return OutputFormatter.assetToAssetOutDto(asset);
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @DeleteMapping(path = "/assets/{assetId}")

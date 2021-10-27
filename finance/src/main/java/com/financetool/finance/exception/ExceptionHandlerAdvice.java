@@ -23,4 +23,11 @@ public class ExceptionHandlerAdvice {
                 .status(HttpStatus.NOT_FOUND)
                 .body(new Error(new Date(), HttpStatus.NOT_FOUND.value(), e.getLocalizedMessage(), request.getRequestURI()));
     }
+
+    @ExceptionHandler(InternalServerException.class)
+    public ResponseEntity<?> handleException(InternalServerException e, HttpServletRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new Error(new Date(), HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getLocalizedMessage(), request.getRequestURI()));
+    }
 }

@@ -4,19 +4,21 @@ import com.financetool.finance.dto.BudgetCategoryCreateRequest;
 import com.financetool.finance.dto.BudgetCategoryOutDto;
 import com.financetool.finance.dto.BudgetCreateRequest;
 import com.financetool.finance.dto.BudgetOutDto;
+import com.financetool.finance.exception.InternalServerException;
 import com.financetool.finance.model.Budget;
 import com.financetool.finance.model.BudgetCategory;
 import com.financetool.finance.service.BudgetService;
+import com.financetool.finance.util.InputValidation;
 import com.financetool.finance.util.OutputFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -26,10 +28,15 @@ public class BudgetController {
 
     @PostMapping(path = "/budgets", consumes = "application/json", produces = "application/json")
     public @ResponseStatus(HttpStatus.CREATED)
-    BudgetOutDto addNewBudget(@RequestBody @Valid BudgetCreateRequest budgetCreateRequest) {
-        Budget budget = budgetService.createBudget(budgetCreateRequest);
+    BudgetOutDto addNewBudget(@RequestBody @Valid BudgetCreateRequest budgetCreateRequest, HttpServletRequest request) {
+        boolean validBudgetCreateRequest = InputValidation.isValidBudgetCreateRequest(budgetCreateRequest, request);
 
-        return OutputFormatter.budgetToBudgetOutDto(budget);
+        if (validBudgetCreateRequest) {
+            Budget budget = budgetService.createBudget(budgetCreateRequest);
+            return OutputFormatter.budgetToBudgetOutDto(budget);
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @GetMapping(path = "/budgets", produces = "application/json")
@@ -45,9 +52,9 @@ public class BudgetController {
 
     @GetMapping(path = "/budgets/{budgetId}", produces = "application/json")
     public BudgetOutDto getBudgetByBudgetId(@PathVariable(value="budgetId") Integer budgetId) {
-        Optional<Budget> budget = budgetService.getBudgetById(budgetId);
+        Budget budget = budgetService.getBudgetById(budgetId);
 
-        return OutputFormatter.budgetToBudgetOutDto(budget.get());
+        return OutputFormatter.budgetToBudgetOutDto(budget);
     }
 
     @GetMapping(path = "/users/{userId}/budgets", produces = "application/json")
@@ -62,10 +69,15 @@ public class BudgetController {
     }
 
     @PutMapping(path = "/budgets/{budgetId}", consumes = "application/json", produces = "application/json")
-    public BudgetOutDto updateBudgetById(@PathVariable(value="budgetId") Integer budgetId, @RequestBody @Valid BudgetCreateRequest budgetCreateRequest) {
-        Optional<Budget> budget = budgetService.updateBudget(budgetId, budgetCreateRequest);
+    public BudgetOutDto updateBudgetById(@PathVariable(value="budgetId") Integer budgetId, @RequestBody @Valid BudgetCreateRequest budgetCreateRequest, HttpServletRequest request) {
+        boolean validBudgetCreateRequest = InputValidation.isValidBudgetCreateRequest(budgetCreateRequest, request);
 
-        return OutputFormatter.budgetToBudgetOutDto(budget.get());
+        if (validBudgetCreateRequest) {
+            Budget budget = budgetService.updateBudget(budgetId, budgetCreateRequest);
+            return OutputFormatter.budgetToBudgetOutDto(budget);
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @DeleteMapping(path = "/budgets/{budgetId}")
@@ -79,10 +91,15 @@ public class BudgetController {
 
     @PostMapping(path = "/budgets/{budgetId}/categories", consumes = "application/json", produces = "application/json")
     public @ResponseStatus(HttpStatus.CREATED)
-    BudgetCategoryOutDto addNewBudgetCategory(@RequestBody @Valid BudgetCategoryCreateRequest budgetCategoryCreateRequest) {
-        BudgetCategory budgetCategory = budgetService.createBudgetCategory(budgetCategoryCreateRequest);
+    BudgetCategoryOutDto addNewBudgetCategory(@RequestBody @Valid BudgetCategoryCreateRequest budgetCategoryCreateRequest, HttpServletRequest request) {
+        boolean isValidBudgetCategoryCreateRequest = InputValidation.isValidBudgetCategoryCreateRequest(budgetCategoryCreateRequest, request);
 
-        return OutputFormatter.budgetCategoryToBudgetCategoryOutDto(budgetCategory);
+        if (isValidBudgetCategoryCreateRequest) {
+            BudgetCategory budgetCategory = budgetService.createBudgetCategory(budgetCategoryCreateRequest);
+            return OutputFormatter.budgetCategoryToBudgetCategoryOutDto(budgetCategory);
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @GetMapping(path = "/budgetCategories", produces = "application/json")
@@ -98,9 +115,9 @@ public class BudgetController {
 
     @GetMapping(path = "/budgetCategories/{budgetCategoryId}", produces = "application/json")
     public BudgetCategoryOutDto getBudgetByBudgetCategoryId(@PathVariable(value="budgetCategoryId") Integer budgetCategoryId) {
-        Optional<BudgetCategory> budgetCategory = budgetService.getBudgetCategoryById(budgetCategoryId);
+        BudgetCategory budgetCategory = budgetService.getBudgetCategoryById(budgetCategoryId);
 
-        return OutputFormatter.budgetCategoryToBudgetCategoryOutDto(budgetCategory.get());
+        return OutputFormatter.budgetCategoryToBudgetCategoryOutDto(budgetCategory);
     }
 
     @GetMapping(path = "/budgets/{budgetId}/budgetCategories", produces = "application/json")
@@ -115,10 +132,15 @@ public class BudgetController {
     }
 
     @PutMapping(path = "/budgetCategories/{budgetCategoryId}", consumes = "application/json", produces = "application/json")
-    public BudgetCategoryOutDto updateBudgetCategoryById(@PathVariable(value="budgetCategoryId") Integer budgetCategoryId, @RequestBody @Valid BudgetCategoryCreateRequest budgetCategoryCreateRequest) {
-        Optional<BudgetCategory> budgetCategory = budgetService.updateBudgetCategory(budgetCategoryId, budgetCategoryCreateRequest);
+    public BudgetCategoryOutDto updateBudgetCategoryById(@PathVariable(value="budgetCategoryId") Integer budgetCategoryId, @RequestBody @Valid BudgetCategoryCreateRequest budgetCategoryCreateRequest, HttpServletRequest request) {
+        boolean validBudgetCategoryCreateRequest = InputValidation.isValidBudgetCategoryCreateRequest(budgetCategoryCreateRequest, request);
 
-        return OutputFormatter.budgetCategoryToBudgetCategoryOutDto(budgetCategory.get());
+        if (validBudgetCategoryCreateRequest) {
+            BudgetCategory budgetCategory = budgetService.updateBudgetCategory(budgetCategoryId, budgetCategoryCreateRequest);
+            return OutputFormatter.budgetCategoryToBudgetCategoryOutDto(budgetCategory);
+        }
+        else
+            throw new InternalServerException("Sorry something went wrong.", request);
     }
 
     @DeleteMapping(path = "/budgetCategories/{budgetCategoryId}")

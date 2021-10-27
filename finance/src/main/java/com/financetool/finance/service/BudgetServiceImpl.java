@@ -42,7 +42,7 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Optional<Budget> getBudgetById(Integer budgetId) {
+    public Budget getBudgetById(Integer budgetId) {
         Optional<Budget> budget = budgetRepository.findById(budgetId);
 
         if (!budget.isPresent()) {
@@ -52,7 +52,7 @@ public class BudgetServiceImpl implements BudgetService {
             throw new ResourceNotFoundException("Budget id " + budgetId + " cannot be found", request);
         }
 
-        return budget;
+        return budget.get();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Optional<Budget> updateBudget(Integer budgetId, BudgetCreateRequest budgetCreateRequest) {
+    public Budget updateBudget(Integer budgetId, BudgetCreateRequest budgetCreateRequest) {
         Optional<Budget> budget = budgetRepository.findById(budgetId);
 
         if (!budget.isPresent()) {
@@ -76,7 +76,7 @@ public class BudgetServiceImpl implements BudgetService {
         budget.get().setDescription(budgetCreateRequest.getDescription());
         budgetRepository.save(budget.get());
 
-        return budget;
+        return budget.get();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Optional<BudgetCategory> getBudgetCategoryById(Integer budgetCategoryId) {
+    public BudgetCategory getBudgetCategoryById(Integer budgetCategoryId) {
         Optional<BudgetCategory> budgetCategory = budgetCategoryRepository.findById(budgetCategoryId);
 
         if (!budgetCategory.isPresent()) {
@@ -123,7 +123,7 @@ public class BudgetServiceImpl implements BudgetService {
             throw new ResourceNotFoundException("Budget id " + budgetCategoryId + " cannot be found", request);
         }
 
-        return budgetCategory;
+        return budgetCategory.get();
 
     }
 
@@ -133,7 +133,7 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Optional<BudgetCategory> updateBudgetCategory(Integer budgetCategoryId, BudgetCategoryCreateRequest budgetCategoryCreateRequest) {
+    public BudgetCategory updateBudgetCategory(Integer budgetCategoryId, BudgetCategoryCreateRequest budgetCategoryCreateRequest) {
         Optional<BudgetCategory> budgetCategory = budgetCategoryRepository.findById(budgetCategoryId);
 
         if (!budgetCategory.isPresent()) {
@@ -150,7 +150,7 @@ public class BudgetServiceImpl implements BudgetService {
         budgetCategory.get().setValue(budgetCategoryCreateRequest.getValue());
         budgetCategoryRepository.save(budgetCategory.get());
 
-        return budgetCategory;
+        return budgetCategory.get();
     }
 
     @Override

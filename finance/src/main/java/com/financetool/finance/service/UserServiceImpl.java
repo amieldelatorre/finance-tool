@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserById(Integer userId) {
+    public User getUserById(Integer userId) {
         Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) {
@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("User id " + userId + " cannot be found.", request);
         }
 
-        return user;
+        return user.get();
     }
 
     @Override
-    public Optional<User> updateUser(Integer userId, UserCreateRequest userRequest) {
+    public User updateUser(Integer userId, UserCreateRequest userRequest) {
         Optional<User> user = userRepository.findById(userId);
 
         if (!user.isPresent()) {
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
             user.get().setPassword(userRequest.getPassword());
             user.get().setRoleType(userRequest.getRoleType());
             userRepository.save(user.get());
-            return user;
+            return user.get();
         }
     }
 

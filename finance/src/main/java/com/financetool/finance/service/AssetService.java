@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface AssetService {
     Asset createAsset(AssetCreateRequest asset);
     List<Asset> getAllAssets();
-    Optional<Asset> getAssetById(Integer assetId);
+    Asset getAssetById(Integer assetId);
     List<Asset> getAssetByUserId(Integer userId);
-    Optional<Asset> updateAsset(Integer assetId, AssetCreateRequest assetRequest);
+    Asset updateAsset(Integer assetId, AssetCreateRequest assetRequest);
     void deleteAsset(Integer assetId);
 }

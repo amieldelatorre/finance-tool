@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface UserService {
     User createUser(UserCreateRequest user);
     List<User> getAllUsers();
-    Optional<User> getUserById(Integer userId);
-    Optional<User> updateUser(Integer userId, UserCreateRequest userRequest);
+    User getUserById(Integer userId);
+    User updateUser(Integer userId, UserCreateRequest userRequest);
     void deleteUser(Integer userId);
     User getUserByEmail(String email);
 }

@@ -13,15 +13,15 @@ import java.util.Optional;
 public interface BudgetService {
     Budget createBudget(BudgetCreateRequest budgetCreateRequest);
     List<Budget> getAllBudgets();
-    Optional<Budget> getBudgetById(Integer budgetId);
+    Budget getBudgetById(Integer budgetId);
     List<Budget> getBudgetByUserId(Integer userId);
-    Optional<Budget> updateBudget(Integer budgetId, BudgetCreateRequest budgetCreateRequest);
+    Budget updateBudget(Integer budgetId, BudgetCreateRequest budgetCreateRequest);
     void deleteBudget(Integer budgetId);
 
     BudgetCategory createBudgetCategory(BudgetCategoryCreateRequest budgetCategoryCreateRequest);
     List<BudgetCategory> getAllBudgetCategories();
-    Optional<BudgetCategory> getBudgetCategoryById(Integer budgetCategoryId);
+    BudgetCategory getBudgetCategoryById(Integer budgetCategoryId);
     List<BudgetCategory> getBudgetCategoryByBudgetId(Integer budgetId);
-    Optional<BudgetCategory> updateBudgetCategory(Integer budgetCategoryId, BudgetCategoryCreateRequest budgetCategoryCreateRequest);
+    BudgetCategory updateBudgetCategory(Integer budgetCategoryId, BudgetCategoryCreateRequest budgetCategoryCreateRequest);
     void deleteBudgetCategory(Integer budgetCategoryId);
 }

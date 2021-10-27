@@ -13,15 +13,15 @@ import java.util.Optional;
 public interface DebtService {
     Debt createDebt(DebtCreateRequest debt);
     List<Debt> getAllDebt();
-    Optional<Debt> getDebtById(Integer debtId);
+    Debt getDebtById(Integer debtId);
     List<Debt> getDebtByUserId(Integer userId);
-    Optional<Debt> updateDebt(Integer debtId, DebtCreateRequest debtRequest);
+    Debt updateDebt(Integer debtId, DebtCreateRequest debtRequest);
     void deleteDebt(Integer debtId);
 
     DebtRepayment createDebtRepayment(DebtRepaymentCreateRequest debtRepayment);
     List<DebtRepayment> getAllDebtRepayment();
-    Optional<DebtRepayment> getDebtRepaymentById(Integer debtRepaymentId);
+    DebtRepayment getDebtRepaymentById(Integer debtRepaymentId);
     List<DebtRepayment> getDebtRepaymentsByDebtId(Integer debtId);
     void deleteDebtRepayment(Integer debtRepaymentId);
-    Optional<DebtRepayment> updateDebtRepayment(Integer debtRepaymentId, DebtRepaymentCreateRequest debtRepaymentRequest);
+    DebtRepayment updateDebtRepayment(Integer debtRepaymentId, DebtRepaymentCreateRequest debtRepaymentRequest);
 }

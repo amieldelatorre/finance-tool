@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface InvestmentService {
     Investment createInvestment(InvestmentCreateRequest investmentCreateRequest);
     List<Investment> getAllInvestments();
-    Optional<Investment> getInvestmentById(Integer investmentId);
+    Investment getInvestmentById(Integer investmentId);
     List<Investment> getInvestmentByUserId(Integer userId);
-    Optional<Investment> updateInvestment(Integer investmentId, InvestmentCreateRequest investmentCreateRequest);
+    Investment updateInvestment(Integer investmentId, InvestmentCreateRequest investmentCreateRequest);
     void deleteInvestment(Integer investmentId);
 }

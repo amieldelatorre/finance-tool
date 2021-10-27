@@ -36,7 +36,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public Optional<Asset> getAssetById(Integer assetId) {
+    public Asset getAssetById(Integer assetId) {
         Optional<Asset> asset = assetRepository.findById(assetId);
 
         if (!asset.isPresent()) {
@@ -46,7 +46,7 @@ public class AssetServiceImpl implements AssetService {
             throw new ResourceNotFoundException("Asset id " + assetId + " cannot be found.", request);
         }
 
-        return asset;
+        return asset.get();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public Optional<Asset> updateAsset(Integer assetId, AssetCreateRequest assetRequest) {
+    public Asset updateAsset(Integer assetId, AssetCreateRequest assetRequest) {
         Optional<Asset> asset = assetRepository.findById(assetId);
 
         if (!asset.isPresent()) {
@@ -70,7 +70,7 @@ public class AssetServiceImpl implements AssetService {
             asset.get().setName(assetRequest.getName());
             asset.get().setValue(assetRequest.getValue());
             assetRepository.save(asset.get());
-            return asset;
+            return asset.get();
         }
     }
 
